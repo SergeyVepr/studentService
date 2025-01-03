@@ -1,0 +1,11 @@
+[
+  {
+    "id": 3,
+    "name": "Serg Vepr",
+    "scores": {
+      "math": 4,
+      "eng": 4,
+      "art": 4
+    }
+  }
+]
