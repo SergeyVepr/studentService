@@ -10,21 +10,23 @@ export default class StudentRepository {
         this.filePath = filePath;
     }
 
-    readAll(): Student[]{
-        try{
+    readAll(): Student[] {
+        try {
             const res = fs.readFileSync(this.filePath, "utf-8");
-            return (JSON.parse(res) as Student[]);
-        }catch (err: any){
+            return (JSON.parse(res) as Student[]).map(e =>
+                new Student(e.id, e.name, e.password, e.scores));
+        } catch (err: any) {
             console.error("Repository :  -> " + err);
             return [];
         }
     }
-    writeAll(arg: Student[]){
-        try{
-            const data = JSON.stringify(arg,null,2);
+
+    writeAll(arg: Student[]) {
+        try {
+            const data = JSON.stringify(arg, null, 2);
             fs.writeFileSync(this.filePath, data, "utf-8");
             return true;
-        }catch (err: any){
+        } catch (err: any) {
             console.error("Repository :  -> " + err);
             return false;
         }
