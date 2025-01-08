@@ -3,7 +3,6 @@ import asyncHandler from 'express-async-handler';
 import StudentServiceImpl from "../students/service/StudentServiceImpl";
 import StudentController from "../students/controller/StudentController";
 import StudentDto from "../students/dto/StudentDto";
-import Student from "../students/models/Student";
 
 
 const router = express.Router();
@@ -22,7 +21,7 @@ router.get("/student/:id", asyncHandler(async (req, res) => {
     if(result instanceof Error){
         res.status(409).json({Error: result});
     }else{
-        res.status(200).json({Status: result});
+        res.status(200).json({result});
     }
 }));
 
@@ -53,11 +52,37 @@ router.put("/student/:id", asyncHandler(async (req, res) => {
 router.put("/score/student/:id", asyncHandler(async (req, res) => {
     const {id} = req.params;
     const {examName,scores} = req.body;
-    const result = controller.addScoreStudent(+id, examName, +scores);
+    const result = controller.addScoreStudent(+id, examName.toLowerCase(), +scores);
     if(!result){
         res.status(404).json({Error: result});
     }else{
         res.status(200).json({Status: result});
+    }
+}));
+
+router.get("/students/name/:name", asyncHandler(async (req, res) => {
+    const {name} = req.params;
+    const result = controller.findStudentByName(name);
+    if(result instanceof Error){
+        res.status(404).json({Error: result});
+    }else{
+        res.status(200).json({result});
+    }
+}));
+
+router.post("/quantity/students", asyncHandler(async (req, res) => {
+    const arr: [] = req.body;
+    res.status(200).json(arr.length);
+}));
+
+router.get("/students/exam/:exam/minscore/:minScore", asyncHandler(async (req, res) => {
+    const {exam,minScore} = req.params;
+    console.log("exam " + exam + " minScore", minScore);
+    const result = controller.findStudentByMinScore(exam, +minScore);
+    if(result instanceof Error){
+        res.status(404).json({Error: result});
+    }else{
+        res.status(200).json({result});
     }
 }))
 

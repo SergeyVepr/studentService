@@ -1,7 +1,7 @@
 import StudentService from "./StudentService";
 import Student from "../models/Student";
 import StudentRepository from "../dao/StudentRepository";
-import {ca} from "date-fns/locale";
+
 
 export default class StudentServiceImpl implements StudentService {
     private repository: StudentRepository = new StudentRepository();
@@ -17,9 +17,9 @@ export default class StudentServiceImpl implements StudentService {
 
     findStudent(id: number): Student | Error {
         const student = this.repository.readAll();
-        const res = student.find(s => s.id === id)
-        if (res) {
-            return res;
+        const res = student.filter(s => s.id === id)
+        if (res.length !== 0) {
+            return res[0];
         } else {
             throw new Error(`${id} not found`);
         }
@@ -33,7 +33,6 @@ export default class StudentServiceImpl implements StudentService {
         if (index > -1) {
             this.repository.writeAll(student);
             return result[0];
-
         } else {
             throw new Error(`${id} not found`);
         }
@@ -58,15 +57,38 @@ export default class StudentServiceImpl implements StudentService {
 
     addScoreStudent(id: number, examName: string, score: number): boolean {
         const students = this.repository.readAll();
-        const student = students.find(s => s.id === id);
-        if (!student) {
-            throw new Error(`${id} not found`);
+        const index = students.findIndex(s => s.id === id);
+        if(index > -1) {
+            students[index].scores.set(examName,score);
+            this.repository.writeAll(students);
+            return true;
+        }
+        return false;
+    }
+
+    findStudentByName(name: string): Student[] | Error {
+        const students = this.repository.readAll();
+        const res = students.filter(s => s.name.toLowerCase() === name.toLowerCase());
+        if(res.length > 0) {
+           return  res;
+        }else{
+            return new Error();
         }
 
-        student.addScore(examName, score)
-        this.repository.writeAll(students);
-        return true;
+    }
 
+    findStudentsByMinScore(exam: string, minScore: number): Student[] | Error {
+        const students = this.repository.readAll();
+        const res = students.filter(s => {
+            if(s.scores.has(exam.toLowerCase())){
+                if(s.scores.get(exam.toLowerCase())! >= minScore){
+                    return true;
+                }
+            }else{
+                return false;
+            }
+        });
+        return res.length >= 0? res : new Error;
     }
 
 }

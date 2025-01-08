@@ -4,9 +4,9 @@ export default class StudentDto {
     private _id: number;
     private _name: string;
     private readonly _password: number;
-    private _scores: object;
+    private _scores: Map<string, number> = new Map<string,number>();
 
-    constructor(id: number, name: string, password: number, scores: object) {
+    constructor(id: number, name: string, password: number, scores: Map<string, number>) {
         this._id = id;
         this._name = name;
         this._password = password;

@@ -13,8 +13,11 @@ export default class StudentRepository {
     readAll(): Student[] {
         try {
             const res = fs.readFileSync(this.filePath, "utf-8");
-            return (JSON.parse(res) as Student[]).map(e =>
-                new Student(e.id, e.name, e.password, e.scores));
+
+            return (JSON.parse(res) as Student[]).map(e => {
+                const scoresMap = new Map(Object.entries(e.scores));
+                return new Student(e.id, e.name, e.password, scoresMap);
+            });
         } catch (err: any) {
             console.error("Repository :  -> " + err);
             return [];
@@ -22,8 +25,14 @@ export default class StudentRepository {
     }
 
     writeAll(arg: Student[]) {
+
         try {
-            const data = JSON.stringify(arg, null, 2);
+            const data = JSON.stringify(arg, (key, value) => {
+                if (value instanceof Map) {
+                    return Object.fromEntries(value);
+                }
+                return value;
+            }, 2);
             fs.writeFileSync(this.filePath, data, "utf-8");
             return true;
         } catch (err: any) {

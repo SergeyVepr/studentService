@@ -1,44 +1,40 @@
 [
   {
-    "scores": {},
-    "test": "hello",
-    "id": 1000,
-    "name": "Peter",
+    "scores": {
+      "art": 122,
+      "eng": 122,
+      "math": 122,
+      "history": 88
+    },
+    "id": 3,
+    "name": "Serg",
     "password": "1234"
   },
   {
     "scores": {},
-    "test": "hello",
-    "id": 3000,
-    "name": "Peter",
+    "id": 4,
+    "name": "danik",
     "password": "1234"
   },
   {
-    "scores": {},
-    "test": "hello",
-    "id": 2000,
-    "name": "Peter",
-    "password": "1234"
+    "scores": {
+      "math": 122,
+      "eng": 122,
+      "rus": 122,
+      "he": 122,
+      "sport": 222,
+      "history": 98
+    },
+    "id": 1,
+    "name": "Sergey",
+    "password": 12333
   },
   {
-    "scores": {},
-    "test": "hello",
-    "id": 122,
-    "name": "Peter",
-    "password": "1234"
-  },
-  {
-    "scores": {},
-    "test": "hello",
-    "id": 232,
-    "name": "Peter",
-    "password": "1234"
-  },
-  {
-    "scores": {},
-    "test": "hello",
-    "id": 12323,
-    "name": "Peter",
+    "scores": {
+      "history": 99
+    },
+    "id": 2,
+    "name": "Katia",
     "password": "1234"
   }
 ]

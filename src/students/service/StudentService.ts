@@ -10,4 +10,8 @@ export default interface StudentService {
     updateStudent(id: number, name: string, password: number): Student | Error;
 
     addScoreStudent(id: number, examName: string, score: number): boolean;
+
+    findStudentByName(name: string): Student[] | Error;
+
+    findStudentsByMinScore(exam: string, minScore: number):Student[] | Error ;
 }
