@@ -78,4 +78,8 @@ export default class StudentController {
         }
 
     }
+
+    findStudentQuantity(arr: []):number {
+        return this.service.findStudentQuantity(arr);
+    }
 }

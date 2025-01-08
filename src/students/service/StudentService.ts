@@ -14,4 +14,6 @@ export default interface StudentService {
     findStudentByName(name: string): Student[] | Error;
 
     findStudentsByMinScore(exam: string, minScore: number):Student[] | Error ;
+
+    findStudentQuantity(arr: []): number;
 }

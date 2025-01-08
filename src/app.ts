@@ -9,7 +9,7 @@ app.use(express.json()); //-> or ./utils/parseBody.ts
 app.use('', studentRouter);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    console.error(err);
+    console.error(err.message);
     res.status(400).json({error: err.message});
 })
 

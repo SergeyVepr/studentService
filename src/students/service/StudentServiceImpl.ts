@@ -79,16 +79,14 @@ export default class StudentServiceImpl implements StudentService {
 
     findStudentsByMinScore(exam: string, minScore: number): Student[] | Error {
         const students = this.repository.readAll();
-        const res = students.filter(s => {
-            if(s.scores.has(exam.toLowerCase())){
-                if(s.scores.get(exam.toLowerCase())! >= minScore){
-                    return true;
-                }
-            }else{
-                return false;
-            }
-        });
-        return res.length >= 0? res : new Error;
+        const res = students.filter(s => s.scores.get(exam.toLowerCase())! >= minScore);
+        return res.length > 0? res : new Error;
+    }
+
+    findStudentQuantity(arr: string[]): number {
+        const students = this.repository.readAll();
+        const namesToLowerCase = arr.map(n => n.toLowerCase());
+        return students.filter(s => namesToLowerCase.includes(s.name.toLowerCase())).length;
     }
 
 }
